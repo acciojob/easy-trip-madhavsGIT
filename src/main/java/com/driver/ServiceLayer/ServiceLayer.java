@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ServiceLayer {
@@ -35,7 +36,6 @@ public class ServiceLayer {
 
     public String getLargestAirport(){
         ArrayList<Airport> list = new ArrayList<>();
-        ArrayList<String> listOfAirportsWithMxTerminals = new ArrayList<>();
         list = repoobject.getallAirportslist();
         int mxterminals = 0;
 
@@ -43,17 +43,24 @@ public class ServiceLayer {
             if(airport.getNoOfTerminals() > mxterminals) {
                 mxterminals = airport.getNoOfTerminals();
 
-            }else if(airport.getNoOfTerminals() == mxterminals){
-                listOfAirportsWithMxTerminals.add(airport.getAirportName());
             }
         }
+        List<String> mxTerminalsAirportList = repoobject.getAirportByTerminals(mxterminals);
+        int n = mxTerminalsAirportList.size();
+        if(mxterminals == 0){
+            return "Max number of terminal is  zero";
+        }
+        if(n == 1){
+            return mxTerminalsAirportList.get(0);
+        }
 
-        String ans = listOfAirportsWithMxTerminals.get(0);
-        for(String airportName : listOfAirportsWithMxTerminals){
-            if(airportName.compareTo(ans) < 0){
+        String ans =mxTerminalsAirportList.get(0);
+        for (String airportName : mxTerminalsAirportList) {
+            if (airportName.compareTo(ans) < 0) {
                 ans = airportName;
             }
         }
+
         return ans;
 
     }
@@ -150,7 +157,7 @@ public class ServiceLayer {
         City city = null;
 
         for(Airport airport : airportslist){
-            if(airport.getAirportName() == airportname){
+            if(airport.getAirportName().equals(airportname)){
                 city = airport.getCity();
             }
         }
@@ -158,11 +165,11 @@ public class ServiceLayer {
         ArrayList<Flight> flightslist = new ArrayList<>();
         flightslist = repoobject.getallFlightslist();
 
-        if(flightslist.size() == 0) return 0;
+        if(flightslist.isEmpty()) return 0;
 
         ArrayList<Flight> flights = new ArrayList<>();
         for(Flight flight : flightslist){
-            if(flight.getFlightDate() == date){
+            if(flight.getFlightDate().equals(date)){
                 flights.add(flight);
             }
         }

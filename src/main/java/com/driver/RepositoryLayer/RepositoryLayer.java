@@ -51,6 +51,19 @@ public class RepositoryLayer {
         return airportslist;
     }
 
+    public List<String> getAirportByTerminals(int terminals){
+        List<String> mxTerminalsList = new ArrayList<>();
+
+        for(Airport airport : airportsDB.values()){
+            if(airport.getNoOfTerminals() == terminals){
+                mxTerminalsList.add(airport.getAirportName());
+            }
+
+        }
+        return mxTerminalsList;
+
+    }
+
 
 
     public Airport getAirportBYName(String airportName){
