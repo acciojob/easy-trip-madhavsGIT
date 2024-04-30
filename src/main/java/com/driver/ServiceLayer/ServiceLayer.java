@@ -15,8 +15,8 @@ import java.util.Date;
 public class ServiceLayer {
 
 
-    @Autowired
-    RepositoryLayer repoobject;
+
+    RepositoryLayer repoobject = new RepositoryLayer();
 
     public String addairport(Airport airport){
         String responce = repoobject.addAirport(airport);
