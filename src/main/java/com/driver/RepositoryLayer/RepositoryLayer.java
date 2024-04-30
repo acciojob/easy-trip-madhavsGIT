@@ -51,6 +51,8 @@ public class RepositoryLayer {
         return airportslist;
     }
 
+
+
     public Airport getAirportBYName(String airportName){
         for(Airport airport : airportsDB.values()){
             if(airport.getAirportName().equals(airportName)){
@@ -138,15 +140,16 @@ public class RepositoryLayer {
     }
 
     public String cancelATicket(int flightId, int passengerId){
+
         List<Integer> pIds = flightPassengermap.get(flightId);
         if(!pIds.contains(passengerId)) return "FAILURE";
         List<Integer> newList = new ArrayList<>();
         int n = pIds.size();
-        for(int i = 0; i < n; i++) {
-            if( pIds.get(i) == passengerId){
-                newList.add(passengerId);
-            }
 
+        for(int i = 0; i < n; i++) {
+            if( pIds.get(i) == passengerId) {
+                newList.add(i);
+            }
         }
         for(int i = 0; i < newList.size(); i++){
             int idx = newList.get(i);

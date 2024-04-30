@@ -35,32 +35,44 @@ public class ServiceLayer {
 
     public String getLargestAirport(){
         ArrayList<Airport> list = new ArrayList<>();
-
+        ArrayList<String> listOfAirportsWithMxTerminals = new ArrayList<>();
         list = repoobject.getallAirportslist();
         int mxterminals = 0;
-        Airport ansairport = null;
+
         for(Airport airport : list){
             if(airport.getNoOfTerminals() > mxterminals) {
                 mxterminals = airport.getNoOfTerminals();
-                ansairport = airport;
+
+            }else if(airport.getNoOfTerminals() == mxterminals){
+                listOfAirportsWithMxTerminals.add(airport.getAirportName());
             }
         }
-        if(ansairport != null) return ansairport.getAirportName();
-        return "No Airports Available";
+
+        String ans = listOfAirportsWithMxTerminals.get(0);
+        for(String airportName : listOfAirportsWithMxTerminals){
+            if(airportName.compareTo(ans) < 0){
+                ans = airportName;
+            }
+        }
+        return ans;
+
     }
 
-    public double getshortestdurationBtwcities(City city1, City city2){
+    public double getshortestdurationBtwcities(City fromCity, City toCity){
         ArrayList<Flight> list = new ArrayList<>();
         list = repoobject.getallFlightslist();
+
         double shortestDuration = Integer.MAX_VALUE;
         for(Flight flight : list ){
-            if(flight.getFromCity() == city1 && flight.getToCity() == city2){
+            if(flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity) ){
                 if ( flight.getDuration() < shortestDuration) {
                     shortestDuration = flight.getDuration();
                 }
-            }else{
-                return -1;
             }
+        }
+
+        if(shortestDuration == Integer.MAX_VALUE){
+            return -1;
         }
         return shortestDuration;
     }
@@ -85,7 +97,7 @@ public class ServiceLayer {
                 return airport.getAirportName();
             }
         }
-        return "flightId is invalid";
+        return null;
 
     }
 

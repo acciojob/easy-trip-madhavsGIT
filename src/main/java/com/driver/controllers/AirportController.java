@@ -56,7 +56,7 @@ public class AirportController {
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
 
         int people = serviceLayerobj.getNumberOfpeople(date, airportName);
-        return 0;
+        return people;
     }
 
     @GetMapping("/calculate-fare")
