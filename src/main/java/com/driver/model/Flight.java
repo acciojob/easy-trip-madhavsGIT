@@ -19,6 +19,7 @@ public class Flight {
     public Flight() {
 
     }
+    //anycomment
 
     public Flight(int flightId, City fromCity, City toCity, int maxCapacity, Date flightDate, double duration) {
         this.flightId = flightId;
